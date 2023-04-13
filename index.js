@@ -78,6 +78,16 @@ inquirer.prompt([
                 message: "What is the engineer's employeeID number",
                 type: "input"
             },
+            {
+                name: 'engineerEmail',
+                message: "What is the engineer's email?",
+                type: 'input'
+            },
+            {
+                name: 'engineerGithub',
+                message: "What is the engineer's Github username?",
+                type: 'input'
+            }
         ]).then(function(answer) {
             globalAnswers.engineers.push(answer)
             addTeamMember()
@@ -97,6 +107,16 @@ inquirer.prompt([
                 message: "What is the intern's employeeID number",
                 type: "input"
             },
+            {
+                name: 'internEmail',
+                message: "What is the intern's email",
+                type: "input"
+            },
+            {
+                name: 'internSchool',
+                message: "what is the intern's school?",
+                type: 'input'
+            }
         ]).then(function(answer) {
             globalAnswers.interns.push(answer)
             addTeamMember()
@@ -110,15 +130,35 @@ inquirer.prompt([
         const bodyThree = globalAnswers.manager.managerEmailAddress;
         const bodyFour = globalAnswers.manager.managerOfficeNumber;
         const bodyFive = globalAnswers.interns.map((intern) => {
-            return `<div>${intern.internName}</div>`
+            return `
+            <div>Intern Name: ${intern.internName}</div> 
+            <div>Intern ID: ${intern.internId}</div> 
+            <div>Intern Email: ${intern.internEmail}</div>
+            <div>Intern School: ${intern.internSchool}</div>
+            `
         } )
+        const bodySix = globalAnswers.engineers.map((engineer) => {
+            return `
+            <div>Engineer Name: ${engineer.engineerName}</div>
+            <div>Engineer ID: ${engineer.engineerId}</div> 
+            <div>Engineer Email: ${engineer.engineerEmail}</div>
+            <div>Engineer Github: <a href ="https://www.github.com/${engineer.engineerGithub}">github</a></div>
+            `
+        })
+        // const bodySeven = globalAnswers.engineers.map((engineer) => {
+        //     return `github.com/${engineer.engineerGithub}`
+        // })
       
         return '<!DOCTYPE html>'
              + '<html><head>' + '</head><body>' + 
              'Team Manager: ' + body + ' ' + 
              'Manager Employee Number: ' + bodyTwo + ' ' +
              'Manager Email Address:' + `<a href=mailto:${bodyThree}>${bodyThree}</a>` + ' ' +
-             'Manager Office Number: ' + bodyFour + bodyFive +
+             'Manager Office Number: ' + bodyFour + ' ' +
+
+             bodyFive + ' ' +
+
+             bodySix + ' ' +
              '</body></html>';
       };
 
